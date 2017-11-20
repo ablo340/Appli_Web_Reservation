@@ -2,13 +2,13 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Ma page web</title>
+        <title>Ma accueil</title>
     </head>
     <body>
         <h1>RESERVATION</h1>
         <P>Le prix de la place est de 10 euros jusqu'a 12 ans et ensuite de 15 euros.</P>
         <p>Le prix de l'assurance annulation est de 20 euros quel que soit le nombre de voyageurs.</p>
-        <form method ="GET" action ="passager.php">
+        <form method ="post" action="passager.php">
         	<p>
         		<label>Destination: 
         			<select name="destination">
@@ -31,10 +31,12 @@
 					<input type="checkbox" name="assurance" id="assurance" />
 				</label>
 			</p>
-			<p>
-				<input type ="submit" value ="Etape suivante" />
-				<input type ="submit" value ="Annuler la reservation" />
-			</p>
+            <input type ="submit" value ="Etape suivante" />
+        </form>
+        <form action="accueil.php">
+            <p>
+                <input type ="submit" value ="Annuler la reservation" />
+            </p>
         </form>
     </body>
 </html>
