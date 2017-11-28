@@ -4,11 +4,13 @@
 		private $destination;
 		private $places;
 		private $assurance;
+		public $passagers;
 
 		function __construct ($destination, $places)
 		{
 			$this->destination = $destination;
 			$this->places = $places;
+			$this->passagers = array();
 		}
 
 		public function getDestination()
@@ -21,10 +23,31 @@
 			return $this->places;
 		}
 
-		public function checkAssurance()
+		public function getAssurance($assur)
 		{
-			return $assurance;
+			if($assur == "on")
+			{
+				$assurance = "OUI";
+				return $assurance;
+			}
+			else
+			{
+				$assurance = "NON";
+				return $assurance;
+			}
 		}
+
+		public function getPassagers()
+		{
+			return $this->passagers;
+		}
+
+		public function setPassagers($passager)
+		{
+			$this->passagers[] = $passager;
+		}
+
+
 	}
 
 	Class Passager
@@ -33,7 +56,7 @@
 		private $firstname;
 		private $age;
 
-		function __construct ($name, $prenom, $age)
+		function __construct ($name, $firstname, $age)
 		{
 			$this->name = $name;
 			$this->firstname = $firstname;

@@ -8,15 +8,16 @@
         <h1>RESERVATION</h1>
         <P>Le prix de la place est de 10 euros jusqu'a 12 ans et ensuite de 15 euros.</P>
         <p>Le prix de l'assurance annulation est de 20 euros quel que soit le nombre de voyageurs.</p>
-        <form method ="get" action ="controleur_passager.PHP">
+        <form method ="get" action ="index.PHP?page=passager">
+            <input type="hidden" name="page" value = "passager">
         	<p>
         		<label>Destination: 
         			<select name="destination">
         				<option value="Berlin">Berlin</option>
-        				<option value="Bruxelles">Bruxelles</option>
+        				<option value="Budapest">Budapest</option>
     					<option value="Barcelone">Barcelone</option>
     					<option value="Paris">Paris</option>
-    					<option value="Miami">Miami</option>
+    					<option value="Rome">Rome</option>
     					<option value="Lisbonne">Lisbonne</option>
 					</select>
 				</label>
@@ -33,8 +34,10 @@
 			</p>
 			<p>
 				<input type ="submit" value ="Etape suivante" />
-				<input type ="submit" value ="Annuler la reservation" />
 			</p>
+        </form>
+        <form action ="index.PHP?page= ">
+            <input type ="submit" value ="Annuler la reservation" />
         </form>
     </body>
 </html>
