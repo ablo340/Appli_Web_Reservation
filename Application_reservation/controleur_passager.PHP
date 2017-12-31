@@ -1,54 +1,86 @@
 <?php
-	include 'model.PHP';
+	
+	//first passenger's page
 	if (isset($_GET['places']) AND isset($_GET['destination']))
 	{
-		$reservation = new Reservation($_GET['destination'], $_GET['places'] );
-		$_SESSION['assurance'] = $_GET['assurance'];
-		$_SESSION['reservation'] = serialize($reservation);
-		$destination = $reservation->getDestination();
-		$places = $reservation->getPlaces();
-		if ($places >= 1 AND $places <= 10)
+		$reservation->setDestination(htmlspecialchars($_GET['destination']));
+		$reservation->setPlaces(htmlspecialchars($_GET['places']));
+		if(isset($_GET['assurance']))
 		{
-			echo '<h1> Passager 1 </h1>';
-					include 'passager.PHP';			
+			$reservation->setAssurance('OUI');
 		}
 		else
 		{
-			echo '<P>Veuillez entrer une destination</br>
-            	    Veuillez entrer un nombre supérieur à 0 et inférieur à 10</P>';
+			$reservation->setAssurance('NON');
+		}
+		$destination = $reservation->getDestination();
+		$places = $reservation->getPlaces();
+		$list = $reservation->getPassagers();
+		if ($places >= 1 AND $places <= 10)
+		{
+			$_SESSION['reservation'] = serialize($reservation);
+			echo '<h1> Passager 1 </h1>';
+					include 'passager.PHP';
+		}
+		else
+		{
+			echo '<P class="erreur">Veuillez entrer une destination</br>
+            	    Veuillez entrer un nombre supérieur à 1 et inférieur à 10</P>';
                 	include 'controleur_accueil.PHP';
 		}
 
 	}
 
-	//verifivation des post
+	//others passengers's page
 	elseif (isset($_GET['nom']) AND isset($_GET['prenom']) AND isset($_GET['age']))
 	{
 
-		$reservation = unserialize($_SESSION['reservation']);
-		$passager = new Passager($_GET['nom'], $_GET['prenom'], $_GET['age']);
-		$reservation->setPassagers($passager);
-		$destination = $reservation->getDestination();
-		$places = $reservation->getPlaces();
-		$list = $reservation->getPassagers();
-
-		if ($places > sizeof($list))	
+		if( is_numeric($_GET['age']) AND $_GET['age'] > 0)
 		{
+			$passager->setName(htmlspecialchars($_GET['nom']));
+			$passager->setFirstname(htmlspecialchars($_GET['prenom']));
+			$passager->setAge(htmlspecialchars($_GET['age']));
+			$reservation->AddPassagers($passager); //add passenger
+			$list = $reservation->getPassagers();
+			$places = $reservation->getPlaces();
+			$destination = $reservation->getDestination();
 			$_SESSION['reservation'] = serialize($reservation);
-			print_r($list);
-			echo '<h1>Passager'.(sizeof($list) + 1).'</h1>';
-			include 'passager.PHP';
-	
+			if ($places > sizeof($list))	
+			{
+				echo '<h1>Passager'.(sizeof($list) + 1).'</h1>';
+				include 'passager.PHP';
+		
+			}
+
+			else
+			{
+				include 'controleur_validation.PHP';
+			}
 		}
 		else
 		{
-			include 'controleur_validation.PHP';
+			echo '<p class="erreur">entrer un vrai age numerique supérieur à 0</p>';
+			echo '<h1>Passager'.(sizeof($reservation->getPassagers()) + 1).'</h1>';
+			include 'passager.PHP';
 		}
+		
 	}
 
+	//Previous page
 	else
-	{
-		echo "demd:s";
+	{	
+		$reservation = unserialize($_SESSION['reservation']);
+
+		if(sizeof($reservation->getPassagers()) > 0)
+		{
+			$reservation->DelPassagers(); //delete passenger recorded
+			echo '<h1>Passager'.(sizeof($reservation->getPassagers()) + 1).'</h1>';
+				include 'passager.PHP';
+			$_SESSION['reservation'] = serialize($reservation);
+		}
+		else
+			include 'controleur_accueil.PHP';
+		
 	}
 		
 		

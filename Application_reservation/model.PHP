@@ -4,13 +4,14 @@
 		private $destination;
 		private $places;
 		private $assurance;
-		public $passagers;
+		private $passagers;
 
-		function __construct ($destination, $places)
+		function __construct ()
 		{
-			$this->destination = $destination;
-			$this->places = $places;
+			$this->destination = null;
+			$this->places = null;
 			$this->passagers = array();
+			$this->assurance = 'OUI';
 		}
 
 		public function getDestination()
@@ -23,18 +24,24 @@
 			return $this->places;
 		}
 
-		public function getAssurance($assur)
+		public function setDestination($destination)
 		{
-			if($assur == "on")
-			{
-				$assurance = "OUI";
-				return $assurance;
-			}
-			else
-			{
-				$assurance = "NON";
-				return $assurance;
-			}
+			$this->destination = $destination;
+		}
+
+		public function setPlaces($places)
+		{
+			$this->places =$places;
+		}
+
+		public function getAssurance()
+		{
+			return $this->assurance;
+		}
+
+		public function setAssurance($assur)
+		{
+			$this->assurance = $assur;
 		}
 
 		public function getPassagers()
@@ -42,9 +49,15 @@
 			return $this->passagers;
 		}
 
-		public function setPassagers($passager)
+		public function AddPassagers($passager)
 		{
 			$this->passagers[] = $passager;
+		}
+
+		public function DelPassagers()
+		{
+			$i = (sizeof($this->passagers) - 1);
+			unset($this->passagers[$i]);
 		}
 
 
@@ -56,11 +69,11 @@
 		private $firstname;
 		private $age;
 
-		function __construct ($name, $firstname, $age)
+		function __construct ()
 		{
-			$this->name = $name;
-			$this->firstname = $firstname;
-			$this->age = $age;
+			$this->name = '';
+			$this->firstname = '';
+			$this->age = '';
 		}
 
 		public function getName()
@@ -78,5 +91,19 @@
 			return $this->age;
 		}
 
+		public function setName($name)
+		{
+			$this->name = $name;
+		}
+
+		public function setFirstname($firstname)
+		{
+			$this->firstname = $firstname;
+		}
+
+		public function setAge($age)
+		{
+			$this->age = $age;
+		}
 	}
 ?>
